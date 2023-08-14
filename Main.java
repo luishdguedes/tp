@@ -1,9 +1,10 @@
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+
+//import java.io.DataOutputStream;
+//import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
+//import java.io.DataInputStream;
+//import java.io.FileInputStream;
 
 class Main {
     public static void main(String[] args) {
@@ -17,9 +18,9 @@ class Main {
             while ((lines[index] = reader.readLine()) != null) {
                 index++;
             }
+            reader.close();
         } catch (Exception e) {
             // TODO: handle exception
         }
-        Film film = new Film();
     }
 }
