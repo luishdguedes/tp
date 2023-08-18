@@ -66,7 +66,24 @@ class Main {
             }
         }
         film.setTitle(holdString);
-        return line = line.substring(index + 2, line.length());
+        return line = line.substring(index + 1, line.length());
+    }
+
+    static String setDirectior(String line, Film film) {
+        int index = 0;
+        String holdString = "";
+        while (line.charAt(index) != ',') {
+            holdString += line.charAt(index);
+            index++;
+
+        }
+        if (holdString == "") {
+            film.setDirector("Unknown");
+            return line = line.substring(index + 1, line.length());
+        }
+        film.setDirector(holdString);
+        return line = line.substring(index + 1, line.length());
+
     }
 
     static void breakingTheLine(String line) {
@@ -74,7 +91,8 @@ class Main {
         line = setId(line, film);
         line = setType(line, film);
         line = setTitle(line, film);
-        System.out.println(film.getId());
+        line = setDirectior(line, film);
+        System.out.println(film.getDirector());
     }
 
     public static void main(String[] args) {
@@ -85,6 +103,5 @@ class Main {
         for (int i = 0; i < lines.length; i++) {
             breakingTheLine(lines[i]);
         }
-
     }
 }
