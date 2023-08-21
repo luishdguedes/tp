@@ -16,7 +16,7 @@ import java.io.BufferedReader;
 class Main {
 
     static String[] getLines(String csvFilePath) {
-        String[] lines = new String[8805];
+        String[] lines = new String[8450];
         try {
             BufferedReader reader = new BufferedReader(new FileReader(csvFilePath));
             int index = 0;
