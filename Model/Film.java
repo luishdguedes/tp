@@ -1,5 +1,7 @@
 package Model;
-import java.sql.Date;
+
+import java.util.Date;
+
 
 /**
  * Represents a film with various attributes such as ID, type, title, director,
