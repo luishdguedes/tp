@@ -2,7 +2,6 @@ package Model;
 
 import java.util.Date;
 
-
 /**
  * Represents a film with various attributes such as ID, type, title, director,
  * etc.
@@ -17,7 +16,9 @@ public class Film {
     private String country;
     private Date dateAdded;
     private String rating;
+    private String duration;
     private String description;
+    private String listed_in;
 
     public Film() {
         // Default constructor with no parameters
@@ -181,5 +182,41 @@ public class Film {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Sets the time duration of the film.
+     *
+     * @param duration The time duration to set for the film.
+     */
+    public void setTimeDuration(String duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * Gets the time duration of the film.
+     *
+     * @return The time duration of the film.
+     */
+    public String getTimeDuration() {
+        return duration;
+    }
+
+    /**
+     * Gets the genre or category in which the film is listed.
+     *
+     * @return The genre or category in which the film is listed.
+     */
+    public String getListedIn() {
+        return listed_in;
+    }
+
+    /**
+     * Sets the genre or category in which the film is listed.
+     *
+     * @param listed_in The genre or category to set for the film.
+     */
+    public void setListedIn(String listed_in) {
+        this.listed_in = listed_in;
     }
 }
