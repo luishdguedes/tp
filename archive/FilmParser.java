@@ -1,4 +1,4 @@
-package Main;
+package archive;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,7 +9,7 @@ import java.util.Date;
 import Model.Film;
 
 public class FilmParser {
-    static String[] getLines(String csvFilePath) {
+    public static String[] getLines(String csvFilePath) {
         String[] lines = new String[8450];
         try {
             BufferedReader reader = new BufferedReader(new FileReader(csvFilePath));
@@ -20,12 +20,12 @@ public class FilmParser {
             }
             reader.close();
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         return lines;
     }
 
-    static String setId(String line, Film film) {
+    public static String setId(String line, Film film) {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder();
         while (line.charAt(index) != ',') {
@@ -35,7 +35,7 @@ public class FilmParser {
         return line.substring(index + 1);
     }
 
-    static String setType(String line, Film film) {
+    public static String setType(String line, Film film) {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder();
         while (line.charAt(index) != ',') {
@@ -48,7 +48,7 @@ public class FilmParser {
         return line.substring(index);
     }
 
-    static String setTitle(String line, Film film) {
+    public static String setTitle(String line, Film film) {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder();
         if (line.charAt(index) == '\"') {
@@ -70,7 +70,7 @@ public class FilmParser {
         return line.substring(index);
     }
 
-    static String setDirectior(String line, Film film) {
+    public static String setDirectior(String line, Film film) {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder();
         if (line.charAt(index) == '\"') {
@@ -92,7 +92,7 @@ public class FilmParser {
         return line.substring(index);
     }
 
-    static String setCast(String line, Film film) {
+    public static String setCast(String line, Film film) {
         int index = 0;
         StringBuilder holdString = new StringBuilder();
 
@@ -123,7 +123,7 @@ public class FilmParser {
         return line.substring(index);
     }
 
-    static String setCountry(String line, Film film) {
+    public static String setCountry(String line, Film film) {
         int index = 0;
         StringBuilder holdString = new StringBuilder();
 
@@ -193,18 +193,18 @@ public class FilmParser {
         }
     }
 
-    static String setRating(String line, Film film) {
+    public static String setRating(String line, Film film) {
         int index = 0;
-        StringBuilder ratingBuilder = new StringBuilder();
+        char[] charBuilder = new char[5];
 
         // Extract rating string until comma is encountered
-        while (index < line.length() && line.charAt(index) != ',') {
-            ratingBuilder.append(line.charAt(index));
+        while (index < charBuilder.length && line.charAt(index) != ',') {
+            charBuilder[index] = line.charAt(index);
             index++;
         }
 
         // Set the extracted rating to the film object
-        film.setRating(ratingBuilder.toString());
+        film.setRating(charBuilder);
 
         // Return the remaining part of the line
         if (index + 1 < line.length()) {
@@ -214,7 +214,7 @@ public class FilmParser {
         }
     }
 
-    static String setTimeDuration(String line, Film film) {
+    public static String setTimeDuration(String line, Film film) {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder();
         while (index < line.length() && line.charAt(index) != ',') {
@@ -229,5 +229,4 @@ public class FilmParser {
             return "";
         }
     }
-    
 }

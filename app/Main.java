@@ -1,11 +1,7 @@
-package Main;
+package app;
 
-//import java.io.DataOutputStream;
-//import java.io.FileOutputStream;
 import Model.Film;
-
-//import java.io.DataInputStream;
-//import java.io.FileInputStream;
+import archive.FilmParser;
 
 class Main {
 
@@ -21,7 +17,7 @@ class Main {
         line = FilmParser.setRating(line, film);
         line = FilmParser.setTimeDuration(line, film);
         // System.out.println(line);
-        System.out.println(film.getTimeDuration());
+        System.out.println(film.getDateAdded());
     }
 
     public static void main(String[] args) {

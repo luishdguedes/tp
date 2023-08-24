@@ -11,11 +11,11 @@ public class Film {
     private int id;// int or float
     private String type;// 1
     private String title;// 2
-    private String director;
+    private String director;//dinamic string
     private String cast;
     private String country;
     private Date dateAdded;// data in long
-    private String rating;// fixed String
+    private char[] rating = new char[5];// fixed String
     private String duration;// 3
 
     public Film() {
@@ -52,7 +52,7 @@ public class Film {
      * @param rating    The rating of the film.
      */
     public Film(int id, String type, String title, String director, String cast, String country,
-            Date dateAdded, String rating) {
+            Date dateAdded, char[] rating) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -154,7 +154,7 @@ public class Film {
         this.dateAdded = dateAdded;
     }
 
-    public String getRating() {
+    public char[] getRating() {
         return rating;
     }
 
@@ -163,7 +163,7 @@ public class Film {
      *
      * @param rating The rating to set for the film.
      */
-    public void setRating(String rating) {
+    public void setRating(char[] rating) {
         this.rating = rating;
     }
 
