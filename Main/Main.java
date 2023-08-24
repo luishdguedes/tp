@@ -20,10 +20,8 @@ class Main {
         line = FilmParser.setDate(line, film);
         line = FilmParser.setRating(line, film);
         line = FilmParser.setTimeDuration(line, film);
-        line = FilmParser.setListedIn(line, film);
-        FilmParser.setDescription(line, film);
         // System.out.println(line);
-        System.out.println(film.getDateAdded());
+        System.out.println(film.getTimeDuration());
     }
 
     public static void main(String[] args) {

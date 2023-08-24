@@ -8,17 +8,15 @@ import java.util.Date;
  */
 
 public class Film {
-    private int id;
-    private String type;
-    private String title;
+    private int id;// int or float
+    private String type;// 1
+    private String title;// 2
     private String director;
     private String cast;
     private String country;
-    private Date dateAdded;
-    private String rating;
-    private String duration;
-    private String description;
-    private String listed_in;
+    private Date dateAdded;// data in long
+    private String rating;// fixed String
+    private String duration;// 3
 
     public Film() {
         // Default constructor with no parameters
@@ -44,18 +42,17 @@ public class Film {
     /**
      * Constructor for the Film class with all available fields.
      *
-     * @param id          The ID of the film.
-     * @param type        The type of the film.
-     * @param title       The title of the film.
-     * @param director    The director of the film.
-     * @param cast        The cast of the film.
-     * @param country     The country of the film.
-     * @param dateAdded   The date when the film was added.
-     * @param rating      The rating of the film.
-     * @param description The description of the film.
+     * @param id        The ID of the film.
+     * @param type      The type of the film.
+     * @param title     The title of the film.
+     * @param director  The director of the film.
+     * @param cast      The cast of the film.
+     * @param country   The country of the film.
+     * @param dateAdded The date when the film was added.
+     * @param rating    The rating of the film.
      */
     public Film(int id, String type, String title, String director, String cast, String country,
-            Date dateAdded, String rating, String description) {
+            Date dateAdded, String rating) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -64,7 +61,6 @@ public class Film {
         this.country = country;
         this.dateAdded = dateAdded;
         this.rating = rating;
-        this.description = description;
     }
 
     public int getId() {
@@ -171,19 +167,6 @@ public class Film {
         this.rating = rating;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the description of the film.
-     *
-     * @param description The description to set for the film.
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     /**
      * Sets the time duration of the film.
      *
@@ -200,23 +183,5 @@ public class Film {
      */
     public String getTimeDuration() {
         return duration;
-    }
-
-    /**
-     * Gets the genre or category in which the film is listed.
-     *
-     * @return The genre or category in which the film is listed.
-     */
-    public String getListedIn() {
-        return listed_in;
-    }
-
-    /**
-     * Sets the genre or category in which the film is listed.
-     *
-     * @param listed_in The genre or category to set for the film.
-     */
-    public void setListedIn(String listed_in) {
-        this.listed_in = listed_in;
     }
 }

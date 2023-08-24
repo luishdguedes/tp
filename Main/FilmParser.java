@@ -27,136 +27,155 @@ public class FilmParser {
 
     static String setId(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder sBuilder = new StringBuilder();
         while (line.charAt(index) != ',') {
-            holdString += line.charAt(index);
-            index++;
+            sBuilder.append(line.charAt(index++));
         }
-        film.setId(Integer.parseInt(holdString));
-        return line = line.substring(index + 1, line.length());
+        film.setId(Integer.parseInt(sBuilder.toString()));
+        return line.substring(index + 1);
     }
 
     static String setType(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder sBuilder = new StringBuilder();
         while (line.charAt(index) != ',') {
-            holdString += line.charAt(index);
+            sBuilder.append(line.charAt(index++));
+        }
+        film.setType(sBuilder.toString());
+        if (index < line.length() && line.charAt(index) == ',') {
             index++;
         }
-        film.setType(holdString);
-        return line = line.substring(index + 1, line.length());
+        return line.substring(index);
     }
 
     static String setTitle(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder sBuilder = new StringBuilder();
         if (line.charAt(index) == '\"') {
             index++;
-            while (line.charAt(index) != '\"') {
-                holdString += line.charAt(index);
-                index++;
+            while (index < line.length() && line.charAt(index) != '\"') {
+                sBuilder.append(line.charAt(index++));
             }
-            film.setTitle(holdString);
-            return line = line.substring(index + 2, line.length());
+            index++;
         } else {
-            while (line.charAt(index) != ',') {
-                holdString += line.charAt(index);
-                index++;
+            while (index < line.length() && line.charAt(index) != ',') {
+                sBuilder.append(line.charAt(index++));
             }
         }
-        film.setTitle(holdString);
-        return line = line.substring(index + 1, line.length());
+        String title = sBuilder.toString().trim();
+        film.setTitle(title.isEmpty() ? "Unknown" : title);
+        if (index < line.length() && line.charAt(index) == ',') {
+            index++;
+        }
+        return line.substring(index);
     }
 
     static String setDirectior(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder sBuilder = new StringBuilder();
         if (line.charAt(index) == '\"') {
             index++;
-            while (line.charAt(index) != '\"') {
-                holdString += line.charAt(index);
-                index++;
+            while (index < line.length() && line.charAt(index) != '\"') {
+                sBuilder.append(line.charAt(index++));
             }
-            film.setDirector(holdString);
-            return line = line.substring(index + 2, line.length());
+            index++;
         } else {
-            while (line.charAt(index) != ',') {
-                holdString += line.charAt(index);
-                index++;
+            while (index < line.length() && line.charAt(index) != ',') {
+                sBuilder.append(line.charAt(index++));
             }
         }
-        if (holdString == "") {
-            film.setDirector("Unknown");
-            return line = line.substring(index + 1, line.length());
+        String directorName = sBuilder.toString().trim();
+        film.setDirector(directorName.isEmpty() ? "Unknown" : directorName);
+        if (index < line.length() && line.charAt(index) == ',') {
+            index++;
         }
-        film.setDirector(holdString);
-        return line = line.substring(index + 1, line.length());
-
+        return line.substring(index);
     }
 
     static String setCast(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder holdString = new StringBuilder();
+
         if (line.charAt(index) == '\"') {
             index++;
-            while (line.charAt(index) != '\"') {
-                holdString += line.charAt(index);
+            while (index < line.length() && line.charAt(index) != '\"') {
+                holdString.append(line.charAt(index));
                 index++;
             }
+            index++; // Move past the closing double quote
+        } else {
+            while (index < line.length() && line.charAt(index) != ',') {
+                holdString.append(line.charAt(index));
+                index++;
+            }
+        }
 
-            film.setCast(holdString);
-            return line = line.substring(index + 2, line.length());
+        String cast = holdString.toString().trim();
+        if (cast.isEmpty()) {
+            cast = "Unknown";
         }
-        while (line.charAt(index) != ',') {
-            holdString += line.charAt(index);
-            index++;
+        film.setCast(cast);
+
+        // Return the remaining part of the line after extracting the cast
+        if (index < line.length() && line.charAt(index) == ',') {
+            index++; // Move past the comma
         }
-        if (holdString == "") {
-            film.setCast("Unknown");
-            return line = line.substring(index + 1, line.length());
-        }
-        film.setCast(holdString);
-        return line = line.substring(index + 1, line.length());
+        return line.substring(index);
     }
 
     static String setCountry(String line, Film film) {
         int index = 0;
-        String holdString = "";
+        StringBuilder holdString = new StringBuilder();
+
         if (line.charAt(index) == '\"') {
             index++;
-            while (line.charAt(index) != '\"') {
-                holdString += line.charAt(index);
+            while (index < line.length() && line.charAt(index) != '\"') {
+                holdString.append(line.charAt(index));
                 index++;
             }
-            film.setCountry(holdString);
-            return line = line.substring(index + 2, line.length());
+            index++; // Move past the closing double quote
+        } else {
+            while (index < line.length() && line.charAt(index) != ',') {
+                holdString.append(line.charAt(index));
+                index++;
+            }
         }
-        while (line.charAt(index) != ',') {
-            holdString += line.charAt(index);
-            index++;
+
+        String country = holdString.toString().trim();
+        if (country.isEmpty()) {
+            country = "Unknown";
         }
-        if (holdString == "") {
-            film.setCountry("Unknown");
+        film.setCountry(country);
+
+        // Return the remaining part of the line after extracting the country
+        if (index < line.length() && line.charAt(index) == ',') {
+            index++; // Move past the comma
         }
-        film.setCountry(holdString);
-        return line = line.substring(index + 1, line.length());
+        return line.substring(index);
     }
 
     public static String setDate(String line, Film film) {
         int index = 1;
         StringBuilder holdString = new StringBuilder();
+
+        // Skip leading spaces
         if (line.charAt(index) == ' ') {
             index++;
         }
+
+        // Check for a comma at the beginning
         if (line.charAt(0) == ',') {
             film.setDateAdded(null);
             return line.substring(index + 1);
         }
+
+        // Extract the date string
         while (index < line.length() && line.charAt(index) != '\"') {
             holdString.append(line.charAt(index));
             index++;
         }
 
+        // Parse the date string using SimpleDateFormat
         SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM d, yyyy");
         Date date;
         try {
@@ -166,6 +185,7 @@ public class FilmParser {
             e.printStackTrace();
         }
 
+        // Return the remaining part of the line
         if (index + 2 < line.length()) {
             return line.substring(index + 7);
         } else {
@@ -175,13 +195,18 @@ public class FilmParser {
 
     static String setRating(String line, Film film) {
         int index = 0;
-        StringBuilder sBuilder = new StringBuilder();
+        StringBuilder ratingBuilder = new StringBuilder();
+
+        // Extract rating string until comma is encountered
         while (index < line.length() && line.charAt(index) != ',') {
-            sBuilder.append(line.charAt(index));
+            ratingBuilder.append(line.charAt(index));
             index++;
         }
-        film.setRating(sBuilder.toString());
 
+        // Set the extracted rating to the film object
+        film.setRating(ratingBuilder.toString());
+
+        // Return the remaining part of the line
         if (index + 1 < line.length()) {
             return line.substring(index + 1);
         } else {
@@ -204,48 +229,5 @@ public class FilmParser {
             return "";
         }
     }
-
-    static String setListedIn(String line, Film film) {
-        int index = 0;
-        StringBuilder holdString = new StringBuilder();
-        if (line.charAt(index) == '\"') {
-            index++;
-            while (line.charAt(index) != '\"') {
-                holdString.append(line.charAt(index));
-                index++;
-            }
-            film.setListedIn(holdString.toString());
-            return line = line.substring(index + 2, line.length());
-        }
-        while (line.charAt(index) != ',') {
-            holdString.append(line.charAt(index));
-            index++;
-        }
-        if (holdString.toString() == "") {
-            film.setListedIn("Unknown");
-        }
-        film.setListedIn(holdString.toString());
-        return line = line.substring(index + 1, line.length());
-    }
-
-    static void setDescription(String line, Film film) {
-        int index = 0;
-        StringBuilder holdString = new StringBuilder();
-        if (line.charAt(index) == '\"') {
-            index++;
-            while (index < line.length() - 1) {
-                holdString.append(line.charAt(index));
-                index++;
-            }
-        } else {
-            while (index < line.length() - 1) {
-                holdString.append(line.charAt(index));
-                index++;
-            }
-        }
-        if (holdString.toString() == "") {
-            film.setDescription("Unknown");
-        }
-        film.setDescription(holdString.toString());
-    }
+    
 }
