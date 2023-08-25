@@ -8,19 +8,18 @@ import java.io.IOException;
 import java.util.Date;
 
 public class Film {
-    private int id;// int or float
-    private String type;// 1
-    private String title;// 2
-    private String director;// dinamic string
+    private int id;
+    private String type;
+    private String title;
+    private String director;
     private String cast;
     private String country;
-    private long dateAdded;// data in long
-    private String rating;// fixed String
-    private String duration;// 3
+    private long dateAdded;
+    private String rating;
+    private String duration;
     private String list;
 
     public Film() {
-
     }
 
     /**
@@ -68,10 +67,6 @@ public class Film {
         return id;
     }
 
-    /**
-     *
-     * @param id The ID to set for the film.
-     */
     public void setId(int id) {
         this.id = id;
     }
@@ -80,10 +75,6 @@ public class Film {
         return type;
     }
 
-    /**
-     *
-     * @param type The type to set for the film.
-     */
     public void setType(String type) {
         this.type = type;
     }
@@ -92,10 +83,6 @@ public class Film {
         return title;
     }
 
-    /**
-     *
-     * @param title The title to set for the film.
-     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -104,10 +91,6 @@ public class Film {
         return director;
     }
 
-    /**
-     * 
-     * @param director The director to set for the film.
-     */
     public void setDirector(String director) {
         this.director = director;
     }
@@ -116,10 +99,6 @@ public class Film {
         return cast;
     }
 
-    /**
-     *
-     * @param cast The cast to set for the film.
-     */
     public void setCast(String cast) {
         this.cast = cast;
     }
@@ -128,10 +107,6 @@ public class Film {
         return country;
     }
 
-    /**
-     *
-     * @param country The country to set for the film.
-     */
     public void setCountry(String country) {
         this.country = country;
     }
@@ -140,10 +115,6 @@ public class Film {
         return dateAdded;
     }
 
-    /**
-     *
-     * @param dateAdded The date to set for when the film was added.
-     */
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded.getTime();
     }
@@ -152,26 +123,14 @@ public class Film {
         return rating;
     }
 
-    /**
-     *
-     * @param rating The rating to set for the film.
-     */
     public void setRating(String rating) {
         this.rating = rating;
     }
 
-    /**
-     * 
-     * @param duration The time duration to set for the film.
-     */
     public void setTimeDuration(String duration) {
         this.duration = duration;
     }
 
-    /**
-     *
-     * @return The time duration of the film.
-     */
     public String getTimeDuration() {
         return duration;
     }
@@ -186,27 +145,41 @@ public class Film {
 
     public String toString() {
         return "ID: " + this.id + "\nTitle: " + this.title + "\nType: " + this.type + "\nDate Added: " + this.dateAdded
-                + "\nRating and duration: " + this.list+"\n";
+                + "\nRating and duration: " + this.list + "\n";
     }
 
     public byte[] toByteArray() throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        dos.writeInt(this.id);
-        dos.writeUTF(this.title);
-        dos.writeUTF(this.type);
-        dos.writeLong(this.dateAdded);
-        dos.writeUTF(this.getList());
-        return baos.toByteArray();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                DataOutputStream dos = new DataOutputStream(baos)) {
+
+            dos.writeInt(this.id);
+            dos.writeUTF(this.title);
+            dos.writeUTF(this.type);
+            dos.writeLong(this.dateAdded);
+            dos.writeUTF(this.list);
+
+            return baos.toByteArray();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e; 
+        }
     }
 
     public void fromByteArray(byte[] ba) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
-        DataInputStream dis = new DataInputStream(bais);
-        this.id = dis.readInt();
-        this.title = dis.readUTF();
-        this.type = dis.readUTF();
-        this.dateAdded = dis.readLong();
-        this.list = dis.readUTF();
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+                DataInputStream dis = new DataInputStream(bais)) {
+
+            this.id = dis.readInt();
+            this.title = dis.readUTF();
+            this.type = dis.readUTF();
+            this.dateAdded = dis.readLong();
+            this.list = dis.readUTF();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
+
 }
