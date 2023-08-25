@@ -5,7 +5,7 @@ import archive.FilmParser;
 
 class Main {
 
-    static void breakingTheLine(String line) {
+    static Film breakingTheLine(String line) {
         Film film = new Film();
         line = FilmParser.setId(line, film);
         line = FilmParser.setType(line, film);
@@ -16,8 +16,9 @@ class Main {
         line = FilmParser.setDate(line, film);
         line = FilmParser.setRating(line, film);
         line = FilmParser.setTimeDuration(line, film);
+        film.setList();
         // System.out.println(line);
-        System.out.println(film.getDateAdded());
+        return film;
     }
 
     public static void main(String[] args) {
@@ -26,7 +27,9 @@ class Main {
         String[] lines = FilmParser.getLines(csvFilePath);
 
         for (int i = 0; i < lines.length; i++) {
-            breakingTheLine(lines[i]);
+            Film film = breakingTheLine(lines[i]);
+            System.out.println(film.toString());
+            
         }
     }
 }

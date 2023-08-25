@@ -41,6 +41,9 @@ public class FilmParser {
         while (line.charAt(index) != ',') {
             sBuilder.append(line.charAt(index++));
         }
+        if(sBuilder.charAt(0) == 'M'){
+            sBuilder.append("\0\0");
+        }
         film.setType(sBuilder.toString());
         if (index < line.length() && line.charAt(index) == ',') {
             index++;
@@ -157,6 +160,9 @@ public class FilmParser {
     public static String setDate(String line, Film film) {
         int index = 1;
         StringBuilder holdString = new StringBuilder();
+        // Parse the date string using SimpleDateFormat
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM d, yyyy");
+        Date date;
 
         // Skip leading spaces
         if (line.charAt(index) == ' ') {
@@ -165,7 +171,12 @@ public class FilmParser {
 
         // Check for a comma at the beginning
         if (line.charAt(0) == ',') {
-            film.setDateAdded(null);
+            try {
+                date = inputFormat.parse("January 1, 1800");
+                film.setDateAdded(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return line.substring(index + 1);
         }
 
@@ -175,9 +186,6 @@ public class FilmParser {
             index++;
         }
 
-        // Parse the date string using SimpleDateFormat
-        SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM d, yyyy");
-        Date date;
         try {
             date = inputFormat.parse(holdString.toString());
             film.setDateAdded(date);
@@ -195,16 +203,15 @@ public class FilmParser {
 
     public static String setRating(String line, Film film) {
         int index = 0;
-        char[] charBuilder = new char[5];
+        StringBuilder sBuilder = new StringBuilder();
 
         // Extract rating string until comma is encountered
-        while (index < charBuilder.length && line.charAt(index) != ',') {
-            charBuilder[index] = line.charAt(index);
-            index++;
+        while (index < line.length() && line.charAt(index) != ',') {
+            sBuilder.append(line.charAt(index++));
         }
 
         // Set the extracted rating to the film object
-        film.setRating(charBuilder);
+        film.setRating(sBuilder.toString());
 
         // Return the remaining part of the line
         if (index + 1 < line.length()) {
