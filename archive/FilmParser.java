@@ -13,15 +13,15 @@ import Model.Film;
 
 public class FilmParser {
     private static final String csvFilePath = "/mnt/c/Users/igorm/OneDrive/Documents/aeds3/tp/DataBase/netflix_titles.csv";
+    private static Crud crud = new Crud();
 
     public static void start() {
 
-        DBCreation dbCreator = new DBCreation();
         String[] lines = getLines(csvFilePath);
 
         for (String line : lines) {
             try {
-                breakingTheLine(line, dbCreator);
+                breakingTheLine(line);
             } catch (IOException e) {
                 System.err.println("Error processing line: " + line);
                 e.printStackTrace();
@@ -29,9 +29,9 @@ public class FilmParser {
         }
     }
 
-    public static void breakingTheLine(String line, DBCreation dbCreator) throws IOException {
+    public static void breakingTheLine(String line) throws IOException {
         Film film = createFilmFromLine(line);
-        dbCreator.binaryWriter(film.toByteArray());
+        crud.create(film);
     }
 
     private static Film createFilmFromLine(String line) {

@@ -162,7 +162,7 @@ public class Film {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw e; 
+            throw e;
         }
     }
 
@@ -175,7 +175,6 @@ public class Film {
             this.type = dis.readUTF();
             this.dateAdded = dis.readLong();
             this.list = dis.readUTF();
-
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
