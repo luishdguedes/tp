@@ -41,20 +41,48 @@ public class Crud {
         }
     }
 
+    public Film sequencialSearch(int id) {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(dbFilePath, "rw")) {
+            randomAccessFile.seek(4);
+            while (randomAccessFile.getFilePointer() < randomAccessFile.length()) {
+                if (randomAccessFile.readChar() != '&') {
+                    int filmSize = randomAccessFile.readInt();
+                    byte[] filmData = new byte[filmSize];
+                    randomAccessFile.read(filmData);
+
+                    Film film = new Film();
+                    film.fromByteArray(filmData);
+                    if (film.getId() == id) {
+                        return film;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void readAll() {
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(dbFilePath, "rw")) {
             randomAccessFile.seek(4);
 
             while (randomAccessFile.getFilePointer() < randomAccessFile.length()) {
-                char tombstone = randomAccessFile.readChar();
-                int filmSize = randomAccessFile.readInt();
-                byte[] filmData = new byte[filmSize];
-                randomAccessFile.read(filmData);
+                if (randomAccessFile.readChar() != '&') {
+                    int filmSize = randomAccessFile.readInt();
+                    byte[] filmData = new byte[filmSize];
+                    randomAccessFile.read(filmData);
 
-                Film film = new Film();
-                film.fromByteArray(filmData);
+                    Film film = new Film();
+                    film.fromByteArray(filmData);
 
-                System.out.println(film.toString());
+                    System.out.println(film.toString());
+                } else {
+                    int filmSize = randomAccessFile.readInt();
+                    byte[] filmData = new byte[filmSize];
+                    randomAccessFile.read(filmData);
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
