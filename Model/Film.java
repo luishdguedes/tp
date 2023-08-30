@@ -18,6 +18,7 @@ public class Film {
     private String rating;
     private String duration;
     private String list;
+    private char tombstone = '¬';
 
     public Film() {
     }
@@ -30,12 +31,12 @@ public class Film {
      * @param country   The country of the film.
      * @param dateAdded The date when the film was added.
      */
-    public Film(int id, String title, String director, String country, Date dateAdded) {
+    public Film(int id, String title, String type, long dateAdded, String list) {
         this.id = id;
         this.title = title;
-        this.director = director;
-        this.country = country;
-        this.dateAdded = dateAdded.getTime();
+        this.type = type;
+        this.list = list;
+        this.dateAdded = dateAdded;
     }
 
     /**
@@ -143,6 +144,14 @@ public class Film {
         return list;
     }
 
+    public void setTombstone(char tombstone) {
+        this.tombstone = tombstone;
+    }
+
+    public char getTombstone() {
+        return this.tombstone;
+    }
+
     public String toString() {
         return "ID: " + this.id + "\nTitle: " + this.title + "\nType: " + this.type + "\nDate Added: " + this.dateAdded
                 + "\nRating and duration: " + this.list + "\n";
@@ -151,7 +160,6 @@ public class Film {
     public byte[] toByteArray() throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 DataOutputStream dos = new DataOutputStream(baos)) {
-
             dos.writeInt(this.id);
             dos.writeUTF(this.title);
             dos.writeUTF(this.type);
