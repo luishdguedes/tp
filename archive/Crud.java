@@ -8,7 +8,7 @@ import java.io.RandomAccessFile;
 import Model.Film;
 
 public class Crud {
-    private static final String dbFilePath = "/mnt/c/Users/igorm/OneDrive/Documents/aeds3/tp/DataBase/films.db";
+    private static final String dbFilePath = "DataBase/films.db";
     private static final char tombstone = '¬';
     static private DataOutputStream dos;
 

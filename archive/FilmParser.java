@@ -8,11 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import Model.Film;
 
 public class FilmParser {
-    private static final String csvFilePath = "/mnt/c/Users/igorm/OneDrive/Documents/aeds3/tp/DataBase/netflix_titles.csv";
+    private static final String csvFilePath = "DataBase/netflix_titles.csv";
     private static Crud crud = new Crud();
 
     public static void start() {
@@ -197,7 +198,7 @@ public class FilmParser {
     public static String setDate(String line, Film film) {
         int index = 1;
         StringBuilder holdString = new StringBuilder();
-        SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM d, yyyy");
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         Date date;
 
         if (line.charAt(index) == ' ') {
