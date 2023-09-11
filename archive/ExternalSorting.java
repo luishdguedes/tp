@@ -89,7 +89,7 @@ public class ExternalSorting {
         if (arr == null || arr.size() <= 1) {
             return; // No need to sort
         }
-        quickSort(arr, 0, arr.size() - 1);
+        quickSort(  arr, 0, arr.size() - 1);
     }
 
     private static void quickSort(List<Film> arr, int low, int high) {
