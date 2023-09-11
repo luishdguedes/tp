@@ -155,4 +155,16 @@ public class Crud {
         return false;
     }
 
+    public static void createInTempFiles(Film film, RandomAccessFile raf) {
+        try {
+            byte[] array = film.toByteArray();
+            raf.seek(raf.length());
+            raf.writeChar(tombstone);
+            raf.writeInt(array.length);
+            raf.write(array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
